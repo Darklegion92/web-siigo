@@ -1,24 +1,30 @@
-import React from "react";
-import { Layout } from "antd";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Login from "./componentes/Login";
-import Home from "./componentes/Home";
+import React, { useEffect, useContext } from 'react'
+import { Layout } from 'antd'
+import { Switch, Route, useHistory } from 'react-router-dom'
+import Login from './componentes/Login'
+import Home from './componentes/Home'
+import { GlobalContext } from './context/GlobalContext'
 
-function App() {
+function App () {
+  const { user } = useContext(GlobalContext)
+  let history = useHistory()
+
+  if (!user) {
+    history.push('/login')
+  }
+
   return (
-    <Layout style={{ height: "650px" }}>
-      <Router className="App">
-        <Switch>
-          <Route path="/login">
-            <Login />
-          </Route>
-          <Route path="/">
-            <Home />
-          </Route>
-        </Switch>
-      </Router>
+    <Layout style={{ height: '650px' }}>
+      <Switch>
+        <Route path='/login'>
+          <Login />
+        </Route>
+        <Route path='/'>
+          <Home />
+        </Route>
+      </Switch>
     </Layout>
-  );
+  )
 }
 
-export default App;
+export default App

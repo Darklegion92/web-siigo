@@ -1,75 +1,79 @@
-import React from "react";
-import { Form, Input, Button, Layout, Image, Space } from "antd";
-import { useHistory } from "react-router-dom";
-import { buttonStyle } from "../styles";
-const { Content } = Layout;
+import React, { useContext } from 'react'
+import { Form, Input, Button, Layout, Image, Space } from 'antd'
+import { useHistory } from 'react-router-dom'
+import { buttonStyle } from '../styles'
+import { GlobalContext } from '../../context/GlobalContext'
+const { Content } = Layout
 
-function Login() {
-  let history = useHistory();
+function Login () {
+  const { login } = useContext(GlobalContext)
+  let history = useHistory()
 
-  const onFinish = (values) => {
-    history.push("/");
-    console.log("Success:", values);
-  };
+  const onFinish = async values => {
+    const islogin = await login(values)
+    if (islogin) {
+      history.push('/')
+    }
+  }
 
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
-  };
+  const onFinishFailed = errorInfo => {
+    console.log('Failed:', errorInfo)
+  }
 
   return (
     <Content
       style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        flexDirection: "row",
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'row'
       }}
     >
       <Space size={30}>
-        <Image width={170} src="img/logonegrol.png" />
+        <Image width={170} src='img/logonegrol.png' />
         <Form
-          name="login"
+          name='login'
           initialValues={{
-            remember: true,
+            remember: true
           }}
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
-          layout="vertical"
+          layout='vertical'
         >
           <Form.Item
-            label="Usuario"
-            name="username"
+            label='Usuario'
+            name='username'
             rules={[
               {
                 required: true,
-                message: "Usuario no valido",
-              },
+                message: 'Usuario no valido'
+              }
             ]}
           >
             <Input />
           </Form.Item>
 
           <Form.Item
-            label="Contraseña"
-            name="password"
+            label='Contraseña'
+            name='password'
             rules={[
               {
                 required: true,
-                message: "Contraseña no valida",
-              },
+                message: 'Contraseña no valida'
+              }
             ]}
           >
             <Input.Password />
           </Form.Item>
           <Form.Item>
-            <Button type="primary" htmlType="submit" style={buttonStyle}>
+            <Button type='primary' htmlType='submit' style={buttonStyle}>
               Ingresar
             </Button>
           </Form.Item>
         </Form>
       </Space>
     </Content>
-  );
+  )
 }
 
-export default Login;
+export default Login
