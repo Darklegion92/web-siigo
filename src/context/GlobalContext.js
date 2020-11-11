@@ -1,28 +1,25 @@
-import React, { useState } from 'react'
-import axios from 'axios'
+import React, { useState } from "react";
+import axios from "axios";
 
-const GlobalContext = React.createContext({})
-const { Provider, Consumer } = GlobalContext
+const GlobalContext = React.createContext({});
+const { Provider, Consumer } = GlobalContext;
 
 const GlobalProvider = ({ children }) => {
-  // const [fechas, setFechas] = useState([])
-  const [datosTable, setDatosTabla] = useState([])
-  const [user, setUser] = useState()
+  const [datosTable, setDatosTabla] = useState([]);
+  const [user, setUser] = useState({ name: "Administrador", user: "admin" });
 
-  const consultarPerecederos = fechas => {
-    console.log(fechas)
-  }
+  const consultarPerecederos = (datos) => {
+    console.log(datos);
+  };
 
-  const login = datos => {
-    console.log(datos)
-
-    return false
-  }
+  const login = (datos) => {
+    return true;
+  };
   return (
     <Provider value={{ consultarPerecederos, user, login }}>
       {children}
     </Provider>
-  )
-}
+  );
+};
 
-export { GlobalProvider, Consumer as GlobalConsumer, GlobalContext }
+export { GlobalProvider, Consumer as GlobalConsumer, GlobalContext };
